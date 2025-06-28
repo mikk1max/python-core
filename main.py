@@ -1,4 +1,4 @@
-print("Hello world!")
+# print("Hello world!")
 
 # name = input(f"Enter your name >>> ")
 
@@ -36,14 +36,11 @@ print("Hello world!")
 # print(cat)
 
 
-
-
 # is_true = True
 # state = "Accept" if is_true else "Decline"
 
 # data = None
 # msg = data or "No data yet"
-
 
 
 # work_experience = int(input("Enter your full work experience in years: "))
@@ -59,7 +56,6 @@ print("Hello world!")
 # print(developer_type)
 
 
-
 # num = int(input("Enter the integer (0 to 100): "))
 # sum = 0
 
@@ -68,7 +64,6 @@ print("Hello world!")
 #     num -= 1
 
 # print(num, sum)
-
 
 
 # pool = 1000
@@ -85,7 +80,7 @@ print("Hello world!")
 #     def apply_discount():
 #         nonlocal price, discount
 #         price = price * (1 - discount)
-        
+
 
 #     apply_discount()
 #     return price
@@ -107,7 +102,6 @@ print("Hello world!")
 # print(len(result))
 
 
-
 # def first(size, *args):
 #     return size + len(args)
 
@@ -121,15 +115,97 @@ print("Hello world!")
 # print(second(10, comment_one="Alex", comment_two="Boris")) # Result: 12
 
 
+# def factorial(n):
+#     if n < 2:
+#         return 1
+#     else:
+#         return n * factorial(n - 1)
+
+# def number_of_groups(n, k):
+#     return int(factorial(n) / (factorial(n - k) * factorial(k)))
+
+# print(number_of_groups(1, 4))
 
 
-def factorial(n):
-    if n < 2:
-        return 1
+# from datetime import datetime
+
+# current_datetime = datetime.now()
+# print(current_datetime.tzinfo)
+
+
+# with open("test.txt", "w") as fh:
+#     fh.write("first line\nsecond line\nthird line")
+
+# with open("test.txt", "r") as fh:
+#     lines = [el.strip() for el in fh.readlines()]
+
+# print(lines)
+
+# byte_str = "some text".encode()
+# print(byte_str)
+
+
+# from jokes import get_random_joke
+
+
+# def main():
+#     name = input("Please, write your name: ")
+#     print(f"Hi, {name}!")
+
+#     while True:
+#         user_response = input(f"{name}, do you want a joke? (yes/no): ").lower()
+#         if user_response == "yes":
+#             print(get_random_joke())
+#         elif user_response == "no":
+#             print(f"Goodbye, {name}!")
+#             break
+
+
+# if __name__ == "__main__":
+#     main()
+
+
+# import math
+# from venv_test.log import log_info, log_warning, log_error
+
+
+# def calculate_square_root(numbers: list) -> None:
+#     for number in numbers:
+#         try:
+#             if number < 0:
+#                 log_warning(f"Знайдено від'ємне число: {number}. Пропускаємо.")
+#                 continue
+
+#             root = math.sqrt(number)
+#             log_info(f"Квадратний корінь з {number} - {root:.2f}")
+
+#         except Exception as e:
+#             log_error(f"Помилка при обчисленні кореня для {number}: {e}")
+
+
+# if __name__ == "__main__":
+#     numbers = [16, -4, 9, 25, 0, 4, "16"]
+#     calculate_square_root(numbers)
+
+
+from temperature_stats.data import load_data, clean_data
+from temperature_stats.processing import calculate_statistics
+
+
+def main():
+    filename = "temperature_stats/temperatures.txt"
+    raw_data = load_data(filename)
+    temperatures = clean_data(raw_data)
+    stats = calculate_statistics(temperatures)
+
+    if stats:
+        print(f"Minimum Temperature: {stats['min']}°C")
+        print(f"Maximum Temperature: {stats['max']}°C")
+        print(f"Average Temperature: {stats['average']:.2f}°C")
+        print(f"Median Temperature: {stats['median']:.2f}°C")
     else:
-        return n * factorial(n - 1)
+        print("No temperature data available.")
 
-def number_of_groups(n, k):
-    return int(factorial(n) / (factorial(n - k) * factorial(k)))
 
-print(number_of_groups(2, 3))
+if __name__ == "__main__":
+    main()
