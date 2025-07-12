@@ -351,46 +351,313 @@
 # print(add_id([], "0143535", "024564"))
 
 
-class Contacts:
-    current_id = 1
+# class Contacts:
+#     current_id = 1
 
-    def __init__(self):
-        self.contacts = []
+#     def __init__(self):
+#         self.contacts = []
 
-    def list_contacts(self):
-        return self.contacts
+#     def list_contacts(self):
+#         return self.contacts
 
-    def add_contacts(self, name, phone, email, favorite):
+#     def add_contacts(self, name, phone, email, favorite):
 
-        contact = locals().copy()
-        del contact["self"]
+#         contact = locals().copy()
+#         del contact["self"]
 
-        contact_with_id = {"id": Contacts.current_id}
-        contact_with_id.update(contact)
+#         contact_with_id = {"id": Contacts.current_id}
+#         contact_with_id.update(contact)
 
-        self.contacts.append(contact_with_id)
-        Contacts.current_id += 1
+#         self.contacts.append(contact_with_id)
+#         Contacts.current_id += 1
 
-    def get_contact_by_id(self, id):
-        for contact in self.contacts:
-            if contact["id"] == id:
-                return contact
-        return None
+#     def get_contact_by_id(self, id):
+#         for contact in self.contacts:
+#             if contact["id"] == id:
+#                 return contact
+#         return None
 
-    def remove_contacts(self, id):
-        for contact in self.contacts:
-            if contact["id"] == id:
-                self.contacts.remove(contact)
-        return None
+#     def remove_contacts(self, id):
+#         for contact in self.contacts:
+#             if contact["id"] == id:
+#                 self.contacts.remove(contact)
+#         return None
 
 
-book = Contacts()
-book.add_contacts(
-    name="Alice", phone="123456", email="alice@example.com", favorite=True
-)
-book.add_contacts("Bob", "789012", "bob@example.com", False)
+# book = Contacts()
+# book.add_contacts(
+#     name="Alice", phone="123456", email="alice@example.com", favorite=True
+# )
+# book.add_contacts("Bob", "789012", "bob@example.com", False)
 
-print(book.list_contacts())
-print(book.get_contact_by_id(1))
-print(book.remove_contacts(1))
-print(book.list_contacts())
+# print(book.list_contacts())
+# print(book.get_contact_by_id(1))
+# print(book.remove_contacts(1))
+# print(book.list_contacts())
+
+
+# import pickle
+
+
+# class Person:
+#     def __init__(self, name: str, email: str, phone: str, favorite: bool):
+#         self.name = name
+#         self.email = email
+#         self.phone = phone
+#         self.favorite = favorite
+
+
+# class Contacts:
+
+#     def __init__(self, filename: str, contacts: list[Person] = None):
+#         if contacts is None:
+#             contacts = []
+#         self.filename = filename
+#         self.contacts = contacts
+#         self.count_save = 0
+#         self.is_unpacking = False
+
+#     def save_to_file(self):
+#         with open(self.filename, "wb") as file:
+#             pickle.dump(self, file)
+
+#     def read_from_file(self):
+#         with open(self.filename, "rb") as file:
+#             content = pickle.load(file)
+#         return content
+
+#     def __getstate__(self):
+#         state = self.__dict__.copy()
+#         state["count_save"] += 1
+#         return state
+
+#     def __setstate__(self, value):
+#         self.__dict__ = value
+#         self.is_unpacking = True
+
+
+# contacts = [
+#     Person(
+#         "Allen Raymond",
+#         "nulla.ante@vestibul.co.uk",
+#         "(992) 914-3792",
+#         False,
+#     ),
+#     Person(
+#         "Chaim Lewis",
+#         "dui.in@egetlacus.ca",
+#         "(294) 840-6685",
+#         False,
+#     ),
+# ]
+
+# persons = Contacts("user_class.dat", contacts)  # count_save = 0
+# persons.save_to_file()  # count_save becomes 1 (in saved file)
+# first = persons.read_from_file()  # count_save == 1
+# first.save_to_file()  # count_save becomes 2
+# second = first.read_from_file()  # count_save == 2
+# second.save_to_file()  # count_save becomes 3
+# third = second.read_from_file()  # count_save == 3
+
+
+# print(persons.count_save)  # 0 -> never incremented
+# print(first.count_save)  # 1
+# print(second.count_save)  # 2
+# print(third.count_save)  # 3
+
+
+# persons = Contacts("user_class.dat", contacts)
+# persons.save_to_file()
+# person_from_file = persons.read_from_file()
+# print(persons.is_unpacking)  # False
+# print(person_from_file.is_unpacking)  # True
+
+
+# import copy
+# import pickle
+
+
+# class Person:
+#     def __init__(self, name: str, email: str, phone: str, favorite: bool):
+#         self.name = name
+#         self.email = email
+#         self.phone = phone
+#         self.favorite = favorite
+
+#     def __copy__(self):
+#         return Person(
+#             name=copy.copy(self.name),
+#             email=copy.copy(self.email),
+#             phone=copy.copy(self.phone),
+#             favorite=copy.copy(self.favorite),
+#         )
+
+
+# class Contacts:
+#     def __init__(self, filename: str, contacts: list[Person] = None):
+#         if contacts is None:
+#             contacts = []
+#         self.filename = filename
+#         self.contacts = contacts
+#         self.is_unpacking = False
+#         self.count_save = 0
+
+#     def save_to_file(self):
+#         with open(self.filename, "wb") as file:
+#             pickle.dump(self, file)
+
+#     def read_from_file(self):
+#         with open(self.filename, "rb") as file:
+#             content = pickle.load(file)
+#         return content
+
+#     def __getstate__(self):
+#         attributes = self.__dict__.copy()
+#         attributes["count_save"] = attributes["count_save"] + 1
+#         return attributes
+
+#     def __setstate__(self, value):
+#         self.__dict__ = value
+#         self.is_unpacking = True
+
+#     def __copy__(self):
+#         copy_obj = Contacts(
+#             filename=copy.copy(self.filename), contacts=copy.copy(self.contacts)
+#         )
+#         copy_obj.is_unpacking = copy.copy(self.is_unpacking)
+#         copy_obj.count_save = copy.copy(self.count_save)
+#         return copy_obj
+
+#     def __deepcopy__(self, memo):
+#         copy_obj = Contacts(
+#             filename=copy.deepcopy(self.filename, memo),
+#             contacts=copy.deepcopy(self.contacts, memo),
+#         )
+#         memo[id(self)] = copy_obj
+#         copy_obj.is_unpacking = copy.deepcopy(self.is_unpacking, memo)
+#         copy_obj.count_save = copy.deepcopy(self.count_save, memo)
+#         return copy_obj
+
+
+class Point:
+    def __init__(self, x, y):
+        self.__x = None
+        self.__y = None
+        self.x = x
+        self.y = y
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, x):
+        if (type(x) == int) or (type(x) == float):
+            self.__x = x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, y):
+        if (type(y) == int) or (type(y) == float):
+            self.__y = y
+
+    def __str__(self):
+        return f"Point({self.x},{self.y})"
+
+
+class Vector:
+    def __init__(self, coordinates: Point):
+        self.coordinates = coordinates
+
+    def __setitem__(self, index, value):
+        if index == 0:
+            self.coordinates.x = value
+        if index == 1:
+            self.coordinates.y = value
+
+    def __getitem__(self, index):
+        if index == 0:
+            return self.coordinates.x
+        if index == 1:
+            return self.coordinates.y
+
+    def __call__(self, value=None):
+        if value:
+            self.coordinates.x = self.coordinates.x * value
+            self.coordinates.y = self.coordinates.y * value
+        return self.coordinates.x, self.coordinates.y
+
+    def __add__(self, vector):
+        return Vector(
+            Point(
+                self.coordinates.x + vector.coordinates.x,
+                self.coordinates.y + vector.coordinates.y,
+            )
+        )
+
+    def __sub__(self, vector):
+        return Vector(
+            Point(
+                self.coordinates.x - vector.coordinates.x,
+                self.coordinates.y - vector.coordinates.y,
+            )
+        )
+
+    def __mul__(self, vector):
+        return (
+            self.coordinates.x * vector.coordinates.x
+            + self.coordinates.y * vector.coordinates.y
+        )
+
+    def len(self):
+        return (self.coordinates.x**2 + self.coordinates.y**2) ** 0.5
+
+    def __str__(self):
+        return f"Vector({self.coordinates.x},{self.coordinates.y})"
+
+    def __eq__(self, vector):
+        return self.len() == vector.len()
+
+    def __ne__(self, vector):
+        return self.len() != vector.len()
+
+    def __lt__(self, vector):
+        return self.len() < vector.len()
+
+    def __gt__(self, vector):
+        return self.len() > vector.len()
+
+    def __le__(self, vector):
+        return self.len() <= vector.len()
+
+    def __ge__(self, vector):
+        return self.len() >= vector.len()
+
+
+vector1 = Vector(Point(1, 10))
+vector2 = Vector(Point(10, 10))
+
+vector3 = vector2 + vector1
+vector4 = vector2 - vector1
+
+print(vector3)  # Vector(11,20)
+print(vector4)  # Vector(9,0)
+
+
+scalar = vector2 * vector1
+
+print(scalar)  # 110
+
+print(vector1.len())  # 10.04987562112089
+print(vector2.len())  # 14.142135623730951
+
+
+print(vector1 == vector2)  # False
+print(vector1 != vector2)  # True
+print(vector1 > vector2)  # False
+print(vector1 < vector2)  # True
+print(vector1 >= vector2)  # False
+print(vector1 <= vector2)  # True
