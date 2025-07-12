@@ -188,24 +188,209 @@
 #     calculate_square_root(numbers)
 
 
-from temperature_stats.data import load_data, clean_data
-from temperature_stats.processing import calculate_statistics
+# from temperature_stats.data import load_data, clean_data
+# from temperature_stats.processing import calculate_statistics
 
 
-def main():
-    filename = "temperature_stats/temperatures.txt"
-    raw_data = load_data(filename)
-    temperatures = clean_data(raw_data)
-    stats = calculate_statistics(temperatures)
+# def main():
+#     filename = "temperature_stats/temperatures.txt"
+#     raw_data = load_data(filename)
+#     temperatures = clean_data(raw_data)
+#     stats = calculate_statistics(temperatures)
 
-    if stats:
-        print(f"Minimum Temperature: {stats['min']}°C")
-        print(f"Maximum Temperature: {stats['max']}°C")
-        print(f"Average Temperature: {stats['average']:.2f}°C")
-        print(f"Median Temperature: {stats['median']:.2f}°C")
-    else:
-        print("No temperature data available.")
+#     if stats:
+#         print(f"Minimum Temperature: {stats['min']}°C")
+#         print(f"Maximum Temperature: {stats['max']}°C")
+#         print(f"Average Temperature: {stats['average']:.2f}°C")
+#         print(f"Median Temperature: {stats['median']:.2f}°C")
+#     else:
+#         print("No temperature data available.")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+
+# class Animal:
+#     def __init__(self, nickname, weight):
+#         self.nickname = nickname
+#         self.weight = weight
+
+#     def say(self):
+#         pass
+
+#     def change_weight(self, weight):
+#         self.weight = weight
+
+
+# class Owner:
+#     def __init__(self, name, age, address):
+#         self.name = name
+#         self.age = age
+#         self.address = address
+
+#     def info(self):
+#         return {"name": self.name, "age": self.age, "address": self.address}
+
+
+# class Dog(Animal):
+#     def __init__(self, nickname, weight, breed, owner: Owner):
+#         self.breed = breed
+#         self.owner = owner
+
+#         super().__init__(nickname, weight)
+
+#     def say(self):
+#         return "Woof"
+
+#     def who_is_owner(self):
+#         return self.owner.info()
+
+
+# owner = Owner("Sherlock", 24, "London, 221B Baker Street")
+# dog = Dog("Simon", 10, "british", owner)
+# print(dog.who_is_owner())
+
+
+# class Animal:
+#     def __init__(self, nickname, weight):
+#         self.nickname = nickname
+#         self.weight = weight
+
+#     def say(self):
+#         pass
+
+
+# class Cat(Animal):
+#     def say(self):
+#         return "Meow"
+
+
+# class Dog(Animal):
+#     def say(self):
+#         return "Woof"
+
+
+# class CatDog(Cat, Dog):
+
+#     def __init__(self, nickname, weight):
+#         super().__init__(nickname, weight)
+
+#     def info(self):
+#         return f"{self.nickname}-{self.weight}"
+
+
+# class DogCat(Dog, Cat):
+
+#     def __init__(self, nickname, weight):
+#         super().__init__(nickname, weight)
+
+#     def info(self):
+#         return f"{self.nickname}-{self.weight}"
+
+
+# catDog = CatDog("Sherlock", 24)
+# dogCat = DogCat("Simon", 10)
+
+# print(catDog.say())
+# print(dogCat.say())
+
+
+# from collections import UserDict, UserList
+
+
+# class LookUpKeyDict(UserDict):
+#     def lookup_key(self, value):
+#         return [key for key in self if self[key] == value]
+
+
+# print(LookUpKeyDict.lookup_key({"data": 10, "number": 10}, 11))
+
+
+# class AmountPaymentList(UserList):
+#     SUM = 0
+
+#     def amount_payment(self):
+#         return sum((x for x in self if x > 0), AmountPaymentList.SUM)
+
+
+# payments = AmountPaymentList([1, -3, 4])
+# print(payments.amount_payment())
+
+
+# from collections import UserString
+# import re
+
+
+# class NumberString(UserString):
+#     def number_count(self):
+#         return len(re.sub(r"\D", "", self.data))
+
+
+# str = NumberString("ewybgx34")
+# print(str.number_count())
+
+
+# class IDException(Exception):
+#     pass
+
+
+# def add_id(id_list, employee_id):
+
+#     if employee_id in id_list:
+#         raise IDException(f"Employee ID '{employee_id}' already exists.")
+
+#     if employee_id.startswith("01"):
+#         id_list.append(employee_id)
+#     else:
+#         raise IDException(f"Employee ID '{employee_id}' do not match the requirements.")
+
+#     return id_list
+
+
+# print(add_id([], "0143535", "024564"))
+
+
+class Contacts:
+    current_id = 1
+
+    def __init__(self):
+        self.contacts = []
+
+    def list_contacts(self):
+        return self.contacts
+
+    def add_contacts(self, name, phone, email, favorite):
+
+        contact = locals().copy()
+        del contact["self"]
+
+        contact_with_id = {"id": Contacts.current_id}
+        contact_with_id.update(contact)
+
+        self.contacts.append(contact_with_id)
+        Contacts.current_id += 1
+
+    def get_contact_by_id(self, id):
+        for contact in self.contacts:
+            if contact["id"] == id:
+                return contact
+        return None
+
+    def remove_contacts(self, id):
+        for contact in self.contacts:
+            if contact["id"] == id:
+                self.contacts.remove(contact)
+        return None
+
+
+book = Contacts()
+book.add_contacts(
+    name="Alice", phone="123456", email="alice@example.com", favorite=True
+)
+book.add_contacts("Bob", "789012", "bob@example.com", False)
+
+print(book.list_contacts())
+print(book.get_contact_by_id(1))
+print(book.remove_contacts(1))
+print(book.list_contacts())
